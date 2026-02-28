@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M5R DEV | محمود راضي - مبرمج ومطور برمجيات</title>
+    <meta name="description" content="موقع شخصي لعرض مشاريعي البرمجية وأعمالي في تطوير البرامج والتطبيقات والألعاب">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="M5RDEV - الباشمبرمج محمود راضي">
+    <meta property="og:description"
+        content="مرحبًا بك في Portfolio الخاص بي، أستعرض فيه PC Programs, Android Apps, Games & Web Projects. Modern UI/UX, Source Code ready to download. 🚀 Where creativity meets code.">
+    <meta property="og:image" content="img/perview.png">
+    <meta property="og:type" content="website">
+    <!-- Optional but recommended -->
+    <meta property="og:site_name" content="M5RDEV">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="icon" href="img/avatar.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- شاشة التحميل بشكل مشابه لنظام تشغيل-->
+    <div class="loading-screen" id="loadingScreen" aria-hidden="false">
+        <div class="win-brand">
+            <div class="win-logo" aria-hidden="true">
+                <span class="pane"></span>
+                <span class="pane"></span>
+                <span class="pane"></span>
+                <span class="pane"></span>
+            </div>
+        </div>
+        <div class="win-spinner" id="winSpinner" aria-hidden="true">
+            <div class="dot d1"></div>
+            <div class="dot d2"></div>
+            <div class="dot d3"></div>
+            <div class="dot d4"></div>
+            <div class="dot d5"></div>
+            <div class="dot d6"></div>
+            <div class="dot d7"></div>
+            <div class="dot d8"></div>
+        </div>
+        <div class="percentage" id="percentage">0%</div>
+        <div class="status" id="status-text">جاري التحميل...</div>
+    </div>
+
+    <!-- فقاعات الخلفية المتحركة -->
+    <div class="bubbles" id="bubbles"></div>
+
+    <!-- المحتوى (سطح المكتب الوهمي) -->
+    <div id="desktop" class="desktop hidden">
+
+        <!-- خلفية السطح المكتب -->
+        <div class="desktop-wallpaper"></div>
+        <!-- نص أنميشن الكتابة في منتصف السطح المكتب -->
+        <div class="typing-container">
+            <span class="typing-cursor">|</span><p id="typing-text" class="typing-text"></p>
+        </div>
+
+        <!-- أيقونات سطح المكتب -->
+        <div class="desktop-icons" id="desktopIcons">
+            <div class="desktop-icon" onclick="showSocialMediaModal()" style="cursor: pointer;" tabindex="0"
+                title="تواصل معي">
+                <i class="fa-solid fa-globe"></i>
+                <span>الباشمبرمج</span>
+            </div>
+
+            <div class="desktop-icon" data-window="win-projects" tabindex="0">
+                <i class="fa-brands fa-google-play"></i>
+                <span>البرامج</span>
+            </div>
+            <div class="desktop-icon" data-window="win-games" tabindex="0">
+                <i class="fa-solid fa-gamepad fa-2x"></i>
+                <span>الألعاب</span>
+            </div>
+            <div class="desktop-icon" data-window="win-websites" tabindex="0">
+                <i class="fa-brands fa-chrome fa-2x"></i>
+                <span>المواقع</span>
+            </div>
+            <div class="desktop-icon" data-window="win-source" tabindex="0">
+                <i class="fa-solid fa-code fa-2x"></i>
+                <span>السورس</span>
+            </div>
+
+        </div>
+
+        <!-- حاوية النوافذ العائمة -->
+        <div id="windows" class="windows"></div>
+
+        <!-- قائمة Start مع بحث ونتائج -->
+        <div id="startMenu" class="start-menu hidden" aria-hidden="true">
+            <div class="start-header">
+                <input id="startSearch" class="start-search" placeholder="ابحث عن تطبيق أو لعبة أو سورس كود أو موقع..."
+                    aria-label="بحث">
+            </div>
+            <div id="startResults" class="start-results">
+                <div class="start-grid">
+                    <button class="start-item" data-window="win-projects"><i
+                            class="fa-solid fa-folder-open"></i><span>البرامج</span></button>
+                    <button class="start-item" data-window="win-games"><i
+                            class="fa-solid fa-gamepad"></i><span>الألعاب</span></button>
+                    <button class="start-item" data-window="win-websites"><i
+                            class="fa-brands fa-chrome"></i><span>المواقع</span></button>
+                    <button class="start-item" data-window="win-source"><i
+                            class="fa-solid fa-code"></i><span>السورس</span></button>
+                </div>
+                <div id="startSearchResultsList" class="start-search-list"></div>
+            </div>
+        </div>
+
+        <!-- قائمة الإعدادات من اليسار -->
+        <div id="settingsMenu" class="settings-menu hidden" aria-hidden="true">
+            <div class="settings-header">
+                <h3>الإعدادات</h3>
+                <button class="settings-close" onclick="toggleSettingsMenu()" aria-label="إغلاق">✕</button>
+            </div>
+            <div class="settings-content">
+                <div class="settings-item">
+                    <div class="settings-label">
+                        <i class="fa-solid fa-moon"></i>
+                        <span>الوضع المظلم</span>
+                    </div>
+                    <input type="checkbox" id="settingsDarkMode" class="settings-toggle">
+                </div>
+                <div class="settings-divider"></div>
+                <div class="settings-item">
+                    <div class="settings-label">
+                        <i class="fa-solid fa-film"></i>
+                        <span>تأثيرات الحركة</span>
+                    </div>
+                    <input type="checkbox" id="settingsAnimations" class="settings-toggle">
+                </div>
+                <div class="settings-divider"></div>
+                <div class="settings-item">
+                    <div class="settings-label">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        <span>فتح الروابط خارجياً</span>
+                    </div>
+                    <input type="checkbox" id="settingsExternalLinks" class="settings-toggle">
+                </div>
+                <div class="settings-divider"></div>
+                <div class="settings-item">
+                    <div class="settings-label">
+                        <i class="fa-solid fa-window-maximize"></i>
+                        <span>نوافذ متعددة</span>
+                    </div>
+                    <input type="checkbox" id="settingsMultipleWindows" class="settings-toggle">
+                </div>
+                <div class="settings-divider"></div>
+                <div class="settings-item">
+                    <div class="settings-label">
+                        <i class="fa-solid fa-sliders-h"></i>
+                        <span>شفافية النوافذ</span>
+                    </div>
+                    <input type="checkbox" id="settingsTransparency" class="settings-toggle">
+                </div>
+                <div class="settings-item" id="settingsTransparencyLevelContainer" style="display:none;">
+                    <div class="settings-label">
+                        <span>نسبة الشفافية (%)</span>
+                    </div>
+                    <input type="range" id="settingsTransparencyLevel" min="0.15" max="1" step="0.01" value="0.7">
+                </div>
+                <div class="settings-divider"></div>
+                <div class="settings-item">
+                    <div class="settings-label">
+                        <i class="fa-solid fa-sun"></i>
+                        <span>سطوع الموقع</span>
+                    </div>
+                    <input type="range" id="settingsBrightness" min="0.5" max="1.5" step="0.01" value="1">
+                </div>
+            </div>
+        </div>
+
+        <div class="popup-message" id="popupMessage">
+            <p>اللهم أنصر أخواننا المسلمين المستضعفين في فلسطين و السودان وسوريا وكل مكان يارب العالمين</p>
+        </div>
+        <div class="float-btn back-to-top" id="backToTop">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+
+        <!-- شريط المهام الشبيه بالويندوز (Mica effect) -->
+        <div class="taskbar" aria-hidden="true">
+            <div class="taskbar-left">
+                <button class="start-btn" aria-label="Start">
+                    <span class="start-logo" aria-hidden="true">
+                        <span class="pane"></span>
+                        <span class="pane"></span>
+                        <span class="pane"></span>
+                        <span class="pane"></span>
+                    </span>
+                </button>
+            </div>
+            <div class="taskbar-center" aria-hidden="false">
+                <div class="taskbar-search">
+                    <input type="text" id="taskbarSearch" class="taskbar-search-input" placeholder="Search apps..."
+                        aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+            </div>
+            <div class="taskbar-right">
+                <div class="system-tray">
+                    <span id="tray-time"></span>
+                    <button id="traySettingsBtn" class="tray-btn" aria-label="Settings" onclick="toggleSettingsMenu()"><i class="fa-solid fa-gear"></i></button>
+                    <!-- info button moved into taskbar -->
+                    <button id="trayInfoBtn" class="tray-btn" aria-label="Info" title="دعاء" onclick="showPopup()"><i
+                            class="fa-solid fa-hands-praying"></i></button>
+
+                    <button id="trayBatteryBtn" class="tray-btn" aria-label="Battery Status" title="حالة البطارية" onclick="showBatteryStatus()">
+                        <i class="fa-solid fa-battery-three-quarters"></i>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- #desktop end -->
+
+    <script src="script.js"></script>
+</body>
+
+</html>
