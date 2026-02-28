@@ -1,5 +1,5 @@
 ## Hi there 
-https://M5R-TEACH.github.io/M5RDEV
+https://M5R-TECH.github.io/M5RDEV
 ياعم صلي علي النبي
 <!--
 **M5RDEV/M5RDEV** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
